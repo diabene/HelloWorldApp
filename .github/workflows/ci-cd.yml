@@ -27,7 +27,8 @@ jobs:
         run: |
           curl -o dotnet.exe https://download.visualstudio.microsoft.com/download/pr/56785524-dcd2-425a-8a95-3c2ee607b22f/e32ce2d12821f85c7d5e9cdee5ff5264/dotnet-sdk-6.0.411-win-x64.exe
           Start-Process ./dotnet.exe -ArgumentList "/S /v/qn"
-          curl -o wix.exe https://github.com/wixtoolset/wix3/releases/download/wix3112rtm/wix311.exe
+          Start-Sleep -Seconds 5
+          curl -v -o wix.exe https://github.com/wixtoolset/wix3/releases/download/wix3112rtm/wix311.exe
           dir
           Start-Process ./wix.exe -ArgumentList "/S /v/qn"
           dir
