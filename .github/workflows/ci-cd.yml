@@ -30,8 +30,7 @@ jobs:
           dir
           Expand-Archive -Path wix311.zip -DestinationPath .
           dir
-          cd wix311
-          Start-Process ./wix.exe -ArgumentList "/S /v/qn"
+          Start-Process ./wix311.exe -ArgumentList "/S /v/qn"
         shell: pwsh
         env:
           SSH_KEY: ${{secrets.SSH_PK_PROD}}
