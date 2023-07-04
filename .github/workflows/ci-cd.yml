@@ -36,6 +36,10 @@ jobs:
           SSH_KEY: ${{secrets.SSH_PK_PROD}}
           SSH_KEY_PATH: ${{ github.workspace }}/../private.key
 
+      - name: Package
+        run: mvn -B package -DskipTests --file pom.xml
+
+
 #      - name: Install wix
 #        run: |
 #           curl -v -o wix.exe https://github.com/wixtoolset/wix3/releases/download/wix3112rtm/wix311.exe
