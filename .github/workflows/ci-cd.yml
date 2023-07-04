@@ -1,0 +1,82 @@
+name: CI/CD Pipeline
+on:
+  workflow_dispatch:
+  #Trigger the workflow on pull req from the prod br
+  pull_request:
+    types: [closed]
+    branches:
+      - master
+
+
+jobs:
+  # Build and  Deploy
+  install prerequisite:
+    name: Prerequisite Install
+    runs-on: windows-latest
+    steps:
+      - name: Checkout Code
+        #checkout code
+        uses: actions/checkout@v3
+        #Set up JDK 19
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: '17'
+        #S
+      - name: Install dependencies
+        run: |
+          curl -o dotnet.exe https://download.visualstudio.microsoft.com/download/pr/56785524-dcd2-425a-8a95-3c2ee607b22f/e32ce2d12821f85c7d5e9cdee5ff5264/dotnet-sdk-6.0.411-win-x64.exe
+          Start-Process ./dotnet.exe -ArgumentList "/S /v/qn"
+        shell: pwsh
+        env:
+          SSH_KEY: ${{secrets.SSH_PK_PROD}}
+          SSH_KEY_PATH: ${{ github.workspace }}/../private.key
+
+
+#  # Delete jar file
+#  delete-artifact:
+#    needs: build_and_deploy
+#    name: Cleanup
+#    runs-on: ubuntu-latest
+#    continue-on-error: true
+#    steps:
+#      - name: Delete Jar File
+#        run: rm -rf /home/runner/work/foodmgt/foodmgt/foodmgt-0.0.1-SNAPSHOT.jar
+#        shell: bash
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#  backend-healthcheck:
+#    needs: deploy
+#    name: Verify-Deployment
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout Code
+#        uses: actions/checkout@v3
+#      - uses: actions/cache@v2
+#        with:
+#          path: ~/.cache/pip
+#          key: ${{ hashFiles('setup.py') }}-${{ hashFiles('requirements.txt') }}
+#      - name: Health Check
+#        run: |
+#          pip install -r requirements.txt
+#          python healthcheck.py
+#        shell: bash
+#        env:
+#          SSH_KEY: ${{secrets.SSH_KEY}}
+#          SSH_KEY_PATH: ${{ github.workspace }}/../private.key
