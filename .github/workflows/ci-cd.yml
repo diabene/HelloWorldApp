@@ -27,6 +27,11 @@ jobs:
         run: |
           curl -H "Connection: close" -o dotnet.exe https://download.visualstudio.microsoft.com/download/pr/56785524-dcd2-425a-8a95-3c2ee607b22f/e32ce2d12821f85c7d5e9cdee5ff5264/dotnet-sdk-6.0.411-win-x64.exe
           Start-Process ./dotnet.exe -ArgumentList "/S /v/qn"
+          dir
+          Expand-Archive -Path wix311.zip -DestinationPath .
+          dir
+          cd wix311
+          Start-Process ./wix.exe -ArgumentList "/S /v/qn"
         shell: pwsh
         env:
           SSH_KEY: ${{secrets.SSH_PK_PROD}}
