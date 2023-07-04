@@ -10,7 +10,7 @@ on:
 
 jobs:
   # Build and  Deploy
-  install prerequisite:
+  install_prerequisite:
     name: Prerequisite Install
     runs-on: windows-latest
     steps:
