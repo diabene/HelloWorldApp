@@ -33,9 +33,9 @@ jobs:
           dir
           Start-Process ./wix311.exe -ArgumentList "/S /v/qn"
         shell: pwsh
-        env:
-          SSH_KEY: ${{secrets.SSH_PK_PROD}}
-          SSH_KEY_PATH: ${{ github.workspace }}/../private.key
+#        env:
+#          SSH_KEY: ${{secrets.SSH_PK_PROD}}
+#          SSH_KEY_PATH: ${{ github.workspace }}/../private.key
 
       - name: Package Installer
         run: |
@@ -46,7 +46,12 @@ jobs:
           mvn -B package -DskipTests --file pom.xml
           jpackage --type exe --input . --dest . --main-jar .\target\HelloWorldApp-1.0-SNAPSHOT.jar --main-class com.genkey.helloworldapp.HelloApplication --module-path ".\javafx-jmods-20.0.1" --add-modules javafx.controls,javafx.fxml --win-shortcut --win-menu
           ls
-#      - name: Publish exe file to github packages
+
+      - name: Publish exe file to github packages
+        uses: actions/upload-artifact@v2
+        with:
+          name: HelloApplication-1.0.exe
+          path: .\ HelloApplication-1.0.exe
 
 
 #      - name: Install wix
