@@ -51,7 +51,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: HelloApplication-1.0.exe
-          path: .\ HelloApplication-1.0.exe
+          path: .\HelloApplication-1.0.exe
 
 
 #      - name: Install wix
