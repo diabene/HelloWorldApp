@@ -17,13 +17,13 @@ jobs:
       - name: Checkout Code
         #checkout code
         uses: actions/checkout@v3
-        #Set up JDK 19
+        #Set up JDK 17
       - name: Set up JDK
         uses: actions/setup-java@v1
         with:
           java-version: '17'
         #S
-      - name: Install Prerequisite
+      - name: Install dotnet and wix311
         run: |
           curl -H "Connection: close" -o dotnet.exe https://download.visualstudio.microsoft.com/download/pr/56785524-dcd2-425a-8a95-3c2ee607b22f/e32ce2d12821f85c7d5e9cdee5ff5264/dotnet-sdk-6.0.411-win-x64.exe
           Start-Process ./dotnet.exe -ArgumentList "/S /v/qn"
@@ -36,8 +36,10 @@ jobs:
           SSH_KEY: ${{secrets.SSH_PK_PROD}}
           SSH_KEY_PATH: ${{ github.workspace }}/../private.key
 
-      - name: Package
-        run: mvn -B package -DskipTests --file pom.xml
+      - name: Package Installer
+        run: | 
+          Get-Command java
+          jpackage --type exe --input . --dest . --main-jar .\target\HelloWorldApp-1.0-SNAPSHOT.jar --main-class com.genkey.helloworldapp.HelloApplication --module-path "C:\Program Files\Java\javafx-jmods-17.0.1" --add-modules javafx.controls,javafx.fxml --win-shortcut --win-menu 
 
 
 #      - name: Install wix
