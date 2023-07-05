@@ -38,7 +38,7 @@ jobs:
 
       - name: Package Installer
         run: |
-          Get-Command -Name java -CommandType Application | Select-Object -ExpandProperty Path
+          mvn -B package -DskipTests --file pom.xml
           jpackage --type exe --input . --dest . --main-jar .\target\HelloWorldApp-1.0-SNAPSHOT.jar --main-class com.genkey.helloworldapp.HelloApplication --module-path "C:\hostedtoolcache\windows\jdk\17.0.7\x64" --add-modules javafx.controls,javafx.fxml --win-shortcut --win-menu 
 
 
