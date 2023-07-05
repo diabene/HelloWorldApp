@@ -19,9 +19,10 @@ jobs:
         uses: actions/checkout@v3
         #Set up JDK 17
       - name: Set up JDK
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v2
         with:
           java-version: '17'
+          distribution: 'adopt'
         #S
       - name: Install dotnet and wix311
         run: |
@@ -41,6 +42,7 @@ jobs:
           mvn -B package -DskipTests --file pom.xml
           ls C:\hostedtoolcache\windows\jdk\17.0.7\x64\jmods
           jpackage --type exe --input . --dest . --main-jar .\target\HelloWorldApp-1.0-SNAPSHOT.jar --main-class com.genkey.helloworldapp.HelloApplication --module-path "C:\hostedtoolcache\windows\jdk\17.0.7\x64\jmods" --add-modules javafx.controls,javafx.fxml --win-shortcut --win-menu 
+#      - name: Publish exe file to github packages
 
 
 #      - name: Install wix
