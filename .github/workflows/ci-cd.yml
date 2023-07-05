@@ -53,6 +53,29 @@ jobs:
           name: HelloApplication-1.0.exe
           path: .\HelloApplication-1.0.exe
 
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN_FOR_EXE }}
+        with:
+          tag_name: v1.0.0  # Specify the desired tag name
+          release_name: Release v1.0.0  # Specify the desired release name
+          body: |
+            Release v1.0.0
+          draft: false
+          prerelease: false
+
+      - name: Attach Artifact to Release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN_FOR_EXE }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: .\HelloApplication-1.0.exe
+          asset_name: HelloApplication-1.0.exe
+          asset_content_type: application/octet-stream
+
 
 #      - name: Install wix
 #        run: |
