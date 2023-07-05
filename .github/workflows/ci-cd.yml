@@ -37,8 +37,8 @@ jobs:
           SSH_KEY_PATH: ${{ github.workspace }}/../private.key
 
       - name: Package Installer
-        run: | 
-          Get-Command java
+        run: |
+          Get-Command -Name java -CommandType Application | Select-Object -ExpandProperty Path 
           jpackage --type exe --input . --dest . --main-jar .\target\HelloWorldApp-1.0-SNAPSHOT.jar --main-class com.genkey.helloworldapp.HelloApplication --module-path "C:\Program Files\Java\javafx-jmods-17.0.1" --add-modules javafx.controls,javafx.fxml --win-shortcut --win-menu 
 
 
