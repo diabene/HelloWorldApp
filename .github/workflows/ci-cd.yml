@@ -39,10 +39,13 @@ jobs:
 
       - name: Package Installer
         run: |
+          curl -o jmods https://download2.gluonhq.com/openjfx/20.0.1/openjfx-20.0.1_windows-x64_bin-jmods.zip
+          ls
+          pwd
           
           mvn -B package -DskipTests --file pom.xml
     
-          jpackage --type exe --input . --dest . --main-jar .\target\HelloWorldApp-1.0-SNAPSHOT.jar --main-class com.genkey.helloworldapp.HelloApplication --module-path "C:\hostedtoolcache\windows\Java_Adopt_jdk\17.0.7-7\x64\jmods" --add-modules javafx.controls,javafx.fxml --win-shortcut --win-menu
+          jpackage --type exe --input . --dest . --main-jar .\target\HelloWorldApp-1.0-SNAPSHOT.jar --main-class com.genkey.helloworldapp.HelloApplication --module-path ".\jmods" --add-modules javafx.controls,javafx.fxml --win-shortcut --win-menu
 #      - name: Publish exe file to github packages
 
 
