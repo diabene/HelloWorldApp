@@ -45,6 +45,7 @@ jobs:
           pwd
           mvn -B package -DskipTests --file pom.xml
           jpackage --type exe --input . --dest . --main-jar .\target\HelloWorldApp-1.0-SNAPSHOT.jar --main-class com.genkey.helloworldapp.HelloApplication --module-path ".\javafx-jmods-20.0.1" --add-modules javafx.controls,javafx.fxml --win-shortcut --win-menu
+          ls
 #      - name: Publish exe file to github packages
 
 
