@@ -22,8 +22,8 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '17'
-          distribution: 'adopt'
-        #S
+          distribution: 'temurin'
+
       - name: Install dotnet and wix311
         run: |
           curl -H "Connection: close" -o dotnet.exe https://download.visualstudio.microsoft.com/download/pr/56785524-dcd2-425a-8a95-3c2ee607b22f/e32ce2d12821f85c7d5e9cdee5ff5264/dotnet-sdk-6.0.411-win-x64.exe
@@ -33,20 +33,15 @@ jobs:
           dir
           Start-Process ./wix311.exe -ArgumentList "/S /v/qn"
         shell: pwsh
-#        env:
-#          SSH_KEY: ${{secrets.SSH_PK_PROD}}
-#          SSH_KEY_PATH: ${{ github.workspace }}/../private.key
 
       - name: Package Installer
         run: |
           curl -o jmods.zip https://download2.gluonhq.com/openjfx/20.0.1/openjfx-20.0.1_windows-x64_bin-jmods.zip
           Expand-Archive -Path jmods.zip -DestinationPath .
-          ls 
-          pwd
           mvn -B package -DskipTests --file pom.xml
           jpackage --type exe --input . --dest . --main-jar .\target\HelloWorldApp-1.0-SNAPSHOT.jar --main-class com.genkey.helloworldapp.HelloApplication --module-path ".\javafx-jmods-20.0.1" --add-modules javafx.controls,javafx.fxml --win-shortcut --win-menu
-          ls
-
+          
+          jpackage --type exe --input . --dest . --main-jar .\HelloWorldApp.jar --main-class com.genkey.helloworldapp.Main --module-path "C:\Program Files\Java\javafx-jmods-20.0.1" --name DemoApp --add-modules javafx.controls,javafx.fxml --win-shortcut --win-menu
       - name: Publish exe file to github packages
         uses: actions/upload-artifact@v2
         with:
@@ -76,63 +71,3 @@ jobs:
           asset_name: HelloApplication-1.0.exe
           asset_content_type: application/octet-stream
 
-
-#      - name: Install wix
-#        run: |
-#           curl -v -o wix.exe https://github.com/wixtoolset/wix3/releases/download/wix3112rtm/wix311.exe
-#           dir
-#           Start-Process ./wix.exe -ArgumentList "/S /v/qn"
-#           dir
-#        shell: pwsh
-#        env:
-#          SSH_KEY: ${{secrets.SSH_PK_PROD}}
-#          SSH_KEY_PATH: ${{ github.workspace }}/../private.key
-
-
-#  # Delete jar file
-#  delete-artifact:
-#    needs: build_and_deploy
-#    name: Cleanup
-#    runs-on: ubuntu-latest
-#    continue-on-error: true
-#    steps:
-#      - name: Delete Jar File
-#        run: rm -rf /home/runner/work/foodmgt/foodmgt/foodmgt-0.0.1-SNAPSHOT.jar
-#        shell: bash
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#  backend-healthcheck:
-#    needs: deploy
-#    name: Verify-Deployment
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Checkout Code
-#        uses: actions/checkout@v3
-#      - uses: actions/cache@v2
-#        with:
-#          path: ~/.cache/pip
-#          key: ${{ hashFiles('setup.py') }}-${{ hashFiles('requirements.txt') }}
-#      - name: Health Check
-#        run: |
-#          pip install -r requirements.txt
-#          python healthcheck.py
-#        shell: bash
-#        env:
-#          SSH_KEY: ${{secrets.SSH_KEY}}
-#          SSH_KEY_PATH: ${{ github.workspace }}/../private.key
