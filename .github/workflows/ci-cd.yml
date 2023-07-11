@@ -39,7 +39,7 @@ jobs:
           curl -o jmods.zip https://download2.gluonhq.com/openjfx/20.0.1/openjfx-20.0.1_windows-x64_bin-jmods.zip
           Expand-Archive -Path jmods.zip -DestinationPath .
           mvn -B package -DskipTests --file pom.xml
-          jpackage --type exe --input . --dest . --main-jar .\target\HelloWorldApp-1.0-SNAPSHOT.jar --main-class com.genkey.helloworldapp.HelloApplication --module-path ".\javafx-jmods-20.0.1" --add-modules javafx.controls,javafx.fxml --win-shortcut --win-menu
+          jpackage --verbose --type exe --input . --dest . --main-jar .\target\HelloWorldApp-1.0-SNAPSHOT.jar --main-class com.genkey.helloworldapp.HelloApplication --module-path ".\javafx-jmods-20.0.1" --add-modules javafx.controls,javafx.fxml --win-shortcut --win-menu
           
 #      - name: Publish exe file to github packages
 #        uses: actions/upload-artifact@v2
@@ -53,10 +53,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN_FOR_EXE }}
         with:
-          tag_name: v1.0.0  # Specify the desired tag name
+          tag_name: v1.0.1 # Specify the desired tag name
           release_name: Release v1.0.0  # Specify the desired release name
           body: |
-            Release v1.0.0
+            Release v1.0.1
           draft: false
           prerelease: false
 
