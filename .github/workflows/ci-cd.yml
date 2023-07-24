@@ -1,11 +1,15 @@
 name: CI/CD Pipeline
 on:
-  workflow_dispatch:
-  #Trigger the workflow on pull req from the prod br
-  pull_request:
-    types: [closed]
+  push:
     branches:
-      - master
+      - 'wix-installer'
+
+#  workflow_dispatch:
+#  #Trigger the workflow on pull req from the prod br
+#  pull_request:
+#    types: [closed]
+#    branches:
+#      - master
 
 
 jobs:
@@ -39,8 +43,8 @@ jobs:
           curl -o jmods.zip https://download2.gluonhq.com/openjfx/20.0.1/openjfx-20.0.1_windows-x64_bin-jmods.zip
           Expand-Archive -Path jmods.zip -DestinationPath .
           mvn -B package -DskipTests --file pom.xml
-          jpackage --verbose --type exe --input . --dest . --main-jar .\target\HelloWorldApp-1.0-SNAPSHOT.jar --main-class com.genkey.helloworldapp.HelloApplication --module-path ".\javafx-jmods-20.0.1" --add-modules javafx.controls,javafx.fxml --win-shortcut --win-menu
-          
+          jpackage --verbose --type exe --input . --dest . --main-jar .\target\HelloWorldApp-1.0-SNAPSHOT.jar --main-class com.genkey.helloworldapp.HelloApplication --module-path ".\javafx-jmods-20.0.1" --add-modules javafx.controls,javafx.fxml --win-shortcut --win-menu --strip-debug --runtime-image ""
+
 #      - name: Publish exe file to github packages
 #        uses: actions/upload-artifact@v2
 #        with:
