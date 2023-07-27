@@ -15,6 +15,7 @@ on:
 jobs:
   # Build and  Deploy
   install_prerequisite:
+    if: 'false' == 'true'
     name: Prerequisite Install
     runs-on: windows-latest
     steps:
