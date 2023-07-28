@@ -33,8 +33,10 @@ jobs:
 
       - name: Create JAR File
         run: |
-          mvn -B package -DskipTests --file pom.xml
+          mvn clean
+          mvn package
         shell: pwsh
+#          mvn -B package -DskipTests --file pom.xml
 
       - name: Create JRE
         run: |
