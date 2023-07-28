@@ -29,11 +29,11 @@ Section
  
   InitPluginsDir
   SetOutPath $PluginsDir
-  File ".\target\HelloWorldApp-1.0-SNAPSHOT.jar"
+  File ".\target\HelloWorldApp-1.0-SNAPSHOT-jar-with-dependencies.jar"
   SetOutPath $TEMP
   ${GetParameters} $R0
 
   #nsExec::Exec '"$TEMP\jre-14.0.2-HelloWorldApp\bin\javaw.exe" -jar "$PluginsDir\HelloWorldApp-1.0-SNAPSHOT.jar" $R0'
-  ExecWait '"$TEMP\jre-14.0.2-HelloWorldApp\bin\javaw.exe" -jar "$PluginsDir\HelloWorldApp-1.0-SNAPSHOT.jar" $R0'
+  ExecWait '"$TEMP\jre-14.0.2-HelloWorldApp\bin\javaw.exe" -jar "$PluginsDir\HelloWorldApp-1.0-SNAPSHOT-jar-with-dependencies.jar" $R0'
   RMDir /r $PluginsDir
 SectionEnd
