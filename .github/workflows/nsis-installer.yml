@@ -2,7 +2,7 @@ name: Creating Installer with NSIS
 on:
   push:
     branches:
-      - 'master'
+      - 'none-for-now'
 
   create:
     tag:
@@ -57,8 +57,14 @@ jobs:
       - name: Extract Tag Name
         if: startsWith(github.ref, 'refs/tags')
         id: extract_tag
-        run: |
-          echo "tag=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/tags/}}" >> $GITHUB_OUTPUT
+        uses: dawidd6/action-get-tag@v1
+        with:
+          # Optionally strip `v` prefix
+          strip_v: true
+
+      - name: Check Tag Extraction
+        if: startsWith(github.ref, 'refs/tags')
+        run: echo ${{steps.tag.outputs.tag}}
 
       - name: Create Release
         if: startsWith(github.ref, 'refs/tags')
