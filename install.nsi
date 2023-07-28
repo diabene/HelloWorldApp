@@ -11,7 +11,7 @@ RequestExecutionLevel user
 ShowInstDetails hide
  
 OutFile "HelloWorldApp.exe"
-Icon "llama-blue.ico"
+#Icon "llama-blue.ico"
 VIProductVersion 2.67.0.00000
 VIAddVersionKey ProductName "HelloWorldApp"
 VIAddVersionKey LegalCopyright "Copyright (c) 2023 Emma-Ido Ukpong"
