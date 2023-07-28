@@ -2,7 +2,7 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - 'master'
+      - 'wix-installer'
 
 #  workflow_dispatch:
 #  #Trigger the workflow on pull req from the prod br
@@ -16,7 +16,6 @@ jobs:
   # Build and  Deploy
   install_prerequisite:
     name: Prerequisite Install
-    if: 'false' == 'true'
     runs-on: windows-latest
     steps:
       - name: Checkout Code

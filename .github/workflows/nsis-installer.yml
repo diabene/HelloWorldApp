@@ -37,5 +37,16 @@ jobs:
         run: |
           jlink --module-path ".\javafx-jmods-20.0.1;.\javafx-sdk-20.0.2\lib;$env:JAVA_HOME\jmods" --add-modules java.base,java.desktop,java.scripting,java.xml,javafx.base,javafx.controls,javafx.graphics,javafx.media,jdk.jsobject,jdk.xml.dom,javafx.fxml --output jre-14.0.2 --strip-debug --compress 2 --no-header-files --no-man-pages
           dir
+          dir target
           dir jre-14.0.2
+        shell: pwsh
+
+      - name: Run NSIS script
+        uses: joncloud/makensis-action@v4
+        with:
+            script-file: "install.nsi"
+
+      - name: Check directory for exe file
+        run: |
+          dir
         shell: pwsh
