@@ -52,9 +52,13 @@ jobs:
 #            script-file: "install.nsi"
 
       - name: Run NSIS Script
-        uses: repolevedavaj/install-nsis@v1
-        with:
-          nsis-version: 3.0.4.1
+        run: |
+          iwr -useb get.scoop.sh -outfile 'install.ps1'
+          .\install.ps1 -RunAsAdmin
+          scoop update
+          scoop bucket add extras
+          scoop install nsis@3.04
+          makensis -- -install.nsi
 
       - name: Check directory for exe file
         run: |
