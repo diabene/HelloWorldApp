@@ -1,12 +1,12 @@
 name: Creating Installer with NSIS
 on:
-  push:
-    branches:
-      - 'master'
+#  push:
+#    branches:
+#      - 'master'
 
-#  create:
-#    tag:
-#      - '*'
+  create:
+    tag:
+      - '*'
 
 jobs:
   create_installer:
@@ -80,27 +80,27 @@ jobs:
           $tag = '${{ steps.extract_tag.outputs.tag }}'
           echo "Tag: $tag"
 
-#      - name: Create Release
-#        if: startsWith(github.ref, 'refs/tags')
-#        id: create_release
-#        uses: actions/create-release@v1
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.TOKEN_FOR_EXE }}
-#        with:
-#          tag_name: v${{ steps.extract_tag.outputs.tag }} # Specify the desired tag name
-#          release_name: Release v${{ steps.extract_tag.outputs.tag }}  # Specify the desired release name
-#          body: |
-#            Release v${{ steps.extract_tag.outputs.tag }}
-#          draft: false
-#          prerelease: false
-#
-#      - name: Attach Artifact to Release
-#        if: startsWith(github.ref, 'refs/tags')
-#        uses: actions/upload-release-asset@v1
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.TOKEN_FOR_EXE }}
-#        with:
-#          upload_url: ${{ steps.create_release.outputs.upload_url }}
-#          asset_path: .\HelloWorldApp.exe
-#          asset_name: HelloWorldApp-${{ steps.extract_tag.outputs.tag }}.exe
-#          asset_content_type: application/octet-stream
+      - name: Create Release
+        if: startsWith(github.ref, 'refs/tags')
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN_FOR_EXE }}
+        with:
+          tag_name: v${{ steps.extract_tag.outputs.tag }} # Specify the desired tag name
+          release_name: Release v${{ steps.extract_tag.outputs.tag }}  # Specify the desired release name
+          body: |
+            Release v${{ steps.extract_tag.outputs.tag }}
+          draft: false
+          prerelease: false
+
+      - name: Attach Artifact to Release
+        if: startsWith(github.ref, 'refs/tags')
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN_FOR_EXE }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: .\HelloWorldApp.exe
+          asset_name: HelloWorldApp-${{ steps.extract_tag.outputs.tag }}.exe
+          asset_content_type: application/octet-stream
