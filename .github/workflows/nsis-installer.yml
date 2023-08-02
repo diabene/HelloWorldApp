@@ -58,7 +58,8 @@ jobs:
           scoop update
           scoop bucket add extras
           scoop install nsis@3.04
-          makensis -- -install.nsi
+          makensis -- install.nsi
+          ls
 
       - name: Check directory for exe file
         run: |
