@@ -57,6 +57,11 @@ jobs:
         shell: pwsh
 #          mvn -B package -DskipTests --file pom.xml
 
+      - name: Extract JAR File
+        run: |
+          unzip .\target\HelloWorldApp-1.0-SNAPSHOT-jar-with-dependencies.jar
+        shell: pwsh
+
       - name: Create JRE
         run: |
           jlink --module-path ".\javafx-jmods-20.0.1;.\javafx-sdk-20.0.2\lib;$env:JAVA_HOME\jmods" --add-modules java.base,java.desktop,java.scripting,java.xml,javafx.base,javafx.controls,javafx.graphics,javafx.media,jdk.jsobject,jdk.xml.dom,javafx.fxml --output jre-14.0.2 --strip-debug --compress 2 --no-header-files --no-man-pages
@@ -94,9 +99,9 @@ jobs:
           strip_v: true
 
       - name: Check Tag Extraction
-        if: startsWith(github.ref, 'refs/tags')
+        if: startsWith(github.ref, 'refs')
         run: |
-          $tag = '${{ steps.extract_tag.outputs.tag }}'
+          $tag = '${{ github.ref }}'
           echo "Tag: $tag"
 
       - name: Create Release
