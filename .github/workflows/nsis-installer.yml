@@ -42,13 +42,13 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Download Necessary Files for JRE
-        run: |
-          curl -o jmods.zip https://download2.gluonhq.com/openjfx/20.0.1/openjfx-20.0.1_windows-x64_bin-jmods.zip
-          Expand-Archive -Path jmods.zip -DestinationPath .
-          curl -o jmods-sdk.zip https://download2.gluonhq.com/openjfx/20.0.2/openjfx-20.0.2_windows-x64_bin-sdk.zip
-          Expand-Archive -Path jmods-sdk.zip -DestinationPath .
-        shell: pwsh
+      # - name: Download Necessary Files for JRE
+      #   run: |
+      #     curl -o jmods.zip https://download2.gluonhq.com/openjfx/20.0.1/openjfx-20.0.1_windows-x64_bin-jmods.zip
+      #     Expand-Archive -Path jmods.zip -DestinationPath .
+      #     curl -o jmods-sdk.zip https://download2.gluonhq.com/openjfx/20.0.2/openjfx-20.0.2_windows-x64_bin-sdk.zip
+      #     Expand-Archive -Path jmods-sdk.zip -DestinationPath .
+      #   shell: pwsh
 
       - name: Create JAR File
         run: |
@@ -62,28 +62,28 @@ jobs:
           unzip .\target\HelloWorldApp-1.0-SNAPSHOT-jar-with-dependencies.jar
         shell: pwsh
 
-      - name: Create JRE
-        run: |
-          jlink --module-path ".\javafx-jmods-20.0.1;.\javafx-sdk-20.0.2\lib;$env:JAVA_HOME\jmods" --add-modules java.base,java.desktop,java.scripting,java.xml,javafx.base,javafx.controls,javafx.graphics,javafx.media,jdk.jsobject,jdk.xml.dom,javafx.fxml --output jre-14.0.2 --strip-debug --compress 2 --no-header-files --no-man-pages
-          dir
-          dir target
-          dir jre-14.0.2
-        shell: pwsh
+      # - name: Create JRE
+      #   run: |
+      #     jlink --module-path ".\javafx-jmods-20.0.1;.\javafx-sdk-20.0.2\lib;$env:JAVA_HOME\jmods" --add-modules java.base,java.desktop,java.scripting,java.xml,javafx.base,javafx.controls,javafx.graphics,javafx.media,jdk.jsobject,jdk.xml.dom,javafx.fxml --output jre-14.0.2 --strip-debug --compress 2 --no-header-files --no-man-pages
+      #     dir
+      #     dir target
+      #     dir jre-14.0.2
+      #   shell: pwsh
 
 #      - name: Run NSIS script
 #        uses: joncloud/makensis-action@v4
 #        with:
 #            script-file: "install.nsi"
 
-      - name: Run NSIS Script
-        run: |
-          iwr -useb get.scoop.sh -outfile 'install.ps1'
-          .\install.ps1 -RunAsAdmin
-          scoop update
-          scoop bucket add extras
-          scoop install nsis@3.04
-          makensis -- install.nsi
-          ls
+      # - name: Run NSIS Script
+      #   run: |
+      #     iwr -useb get.scoop.sh -outfile 'install.ps1'
+      #     .\install.ps1 -RunAsAdmin
+      #     scoop update
+      #     scoop bucket add extras
+      #     scoop install nsis@3.04
+      #     makensis -- install.nsi
+      #     ls
 
       - name: Check directory for exe file
         run: |
